@@ -1,0 +1,5 @@
+Urutan melakukan seeding versi saya :
+
+1. Buka MIGRATION, cek tabel mana yg akan diubah atau ditambahkan fieldnya
+2. Buka FACTORIES, cek field yg akan diubah atau ditambahkan beserta dengan FAKER nya
+3. Buka SEEDERS, buat method yg akan dijalankan 

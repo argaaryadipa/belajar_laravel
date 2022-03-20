@@ -3,15 +3,19 @@
 @section('container')
     <article>
         <h2>{{ $post->title }}</h2>
-        <h5> By : Agokk Ackerman in 
-            <a href="/categories/{{ $post->category->slug }}">
+        <p> By : 
+            <a class="text-decoration-none" href="/authors/{{ $post->author->username }}">
+                {{ $post->author->name }}
+            </a> 
+            in 
+            <a class="text-decoration-none" href="/categories/{{ $post->category->slug }}">
                 {{ $post->category->name }}
             </a>
-        </h5>
+        </p>
         
         {!! $post->body !!}
 
     </article>
 
-    <a href="/posts">Back to Blog</a>
+    <a href="/posts" class="text-decoration-none d-block mt-3">Back to Posts</a>
 @endsection
