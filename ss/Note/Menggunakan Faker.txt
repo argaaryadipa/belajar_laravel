@@ -1,0 +1,14 @@
+Menggunakan Faker :
+
+1. Buka folder config, app.php
+2. Cari bagian 'faker_locale'
+3. Tambahkan variabel env baru env('FAKER_LOCALE')
+	Sebelum ditambahkan:
+	'faker_locale' => 'en_US'
+
+	Sesudah ditambahkan :
+	'faker_locale' => env('FAKER_LOCALE', 'en_US'),
+	Keterangan :
+	Akan langsung mengambil di variabel faker_locale, jika tidak maka akan default US
+4. Buka file .env 
+5. Tambahkan FAKER_LOCALE=id_ID, keterangan sama dengan poin no 3
