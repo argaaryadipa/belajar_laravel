@@ -2,7 +2,29 @@
 
 @section('container')
 
-    <h1 class="mb-5">{{ $title }}</h1>
+    <h1 class="mb-3">{{ $title }}</h1>
+
+    {{-- Searching --}}
+    <div class="row justify-content-end mb-3">
+        <div class="col-md-6">
+            <form action="/posts">
+
+                @if (request('category'))
+                    <input type="hidden" name="category" value="{{ request('category') }}">
+                @endif
+
+                @if (request('author'))
+                    <input type="hidden" name="author" value="{{ request('author') }}">
+                @endif
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search..." name="search" value="{{ request('search') }}">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {{-- End Searching --}}
 
     {{-- hitung jumlah postingan --}}
     @if ($posts->count())
@@ -17,11 +39,11 @@
                 <p> 
                     <small>
                         By : 
-                        <a class="text-decoration-none" href="/authors/{{ $posts[0]->author->username }}">
+                        <a class="text-decoration-none" href="/posts?author={{ $posts[0]->author->username }}">
                             {{ $posts[0]->author->name }}
                         </a> 
                         in 
-                        <a class="text-decoration-none" href="/categories/{{ $posts[0]->category->slug }}">
+                        <a class="text-decoration-none" href="/posts?category={{ $posts[0]->category->slug }}">
                             {{ $posts[0]->category->name }}
                             {{-- mengambil waktu saat post dibuat --}}
                         </a> {{ $posts[0]->created_at->diffForHumans() }}   
@@ -34,9 +56,6 @@
 
             </div>
         </div>
-    @else
-        <p class="text-center fs-4">No post found.</p> 
-    @endif
 
     <div class="container">
         <div class="row">
@@ -44,7 +63,7 @@
             <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="position-absolute px-3 py-2" style="background-color: rgba(0, 0, 0, 0.8)">
-                        <a href="/categories/{{ $post->category->slug }}" class="text-white text-decoration-none">
+                        <a href="/posts?category={{ $post->category->slug }}" class="text-white text-decoration-none">
                             {{ $post->category->name }}
                         </a>
                     </div>
@@ -54,7 +73,7 @@
                         <p> 
                             <small>
                                 By : 
-                                <a class="text-decoration-none" href="/authors/{{ $post->author->username }}">
+                                <a class="text-decoration-none" href="/posts?author={{ $post->author->username }}">
                                     {{ $post->author->name }}
                                 </a> 
                                 {{ $post->created_at->diffForHumans() }}   
@@ -67,6 +86,15 @@
             </div>
             @endforeach
         </div>
+    </div>
+
+    @else
+        <p class="text-center fs-4">No post found.</p> 
+    @endif
+
+    {{-- pagination --}}
+    <div class="d-flex justify-content-center">
+        {{ $posts->links() }}
     </div>
 
     {{-- @foreach ($posts->skip(1) as $post)
